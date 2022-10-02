@@ -1,0 +1,25 @@
+config {
+  type: "operations",
+  schema: "gbizinfo_staging",
+  hasOutput: true,
+}
+
+CREATE OR REPLACE EXTERNAL TABLE ${self()} (
+  corporate_number STRING,
+  name__corporate_number STRING,
+  location__corporate_number STRING,
+  name STRING,
+  location STRING,
+  date_of_approval STRING,
+  title STRING,
+  amount STRING,
+  target STRING,
+  government_departments STRING,
+  note STRING,
+  joint_signatures STRING,
+  subsidy_resource STRING,
+) OPTIONS (
+    allow_quoted_newlines=TRUE,
+    format = 'CSV',
+    uris = ['gs://jpdata-gbizinfo/subsidy.csv'],
+    skip_leading_rows = 1)

@@ -1,0 +1,61 @@
+config {
+  type: "table",
+  schema: "gbizinfo",
+  description: "財務情報",
+  columns: {
+    corporate_number: "法人番号",
+    name: "法人名",
+    location: "本社所在地",
+    accounting_standards: "会計基準",
+    fiscal_year_cover_page: {
+      description: "事業年度",
+      columns: {
+        start_date: "期初日",
+        end_date: "期末日",
+      },
+    },
+    period: "回次",
+    net_sales_summary_of_business_results: "売上高（円）",
+    operating_revenue1_summary_of_business_results: "営業収益（円）",
+    operating_revenue2_summary_of_business_results: "営業収入（円）",
+    gross_operating_revenue_summary_of_business_results: "営業総収入（円）",
+    ordinary_income_summary_of_business_results: "経常収益（円）",
+    net_premiums_written_summary_of_business_results_ins: "正味収入保険料（円）",
+    ordinary_income_loss_summary_of_business_results: "経常利益又は経常損失（△）（円）",
+    net_income_loss_summary_of_business_results: "当期純利益又は当期純損失（△）（円）",
+    capital_stock_summary_of_business_results: "資本金（円）",
+    net_assets_summary_of_business_results: "純資産額（円）",
+    total_assets_summary_of_business_results: "総資産額（円）",
+    number_of_employees: "従業員数（人）",
+    major_shareholders: {
+      description: "大株主",
+      columns: {
+        name_major_shareholders: "氏名又は名称",
+        shareholding_ratio: "発行済株式総数に対する所有株式数の割合",
+      },
+    },
+  },
+}
+
+SELECT
+  corporate_number,
+  name,
+  location,
+  accounting_standards,
+  fiscal_year_cover_page,
+  period,
+  net_sales_summary_of_business_results,
+  operating_revenue1_summary_of_business_results,
+  operating_revenue2_summary_of_business_results,
+  gross_operating_revenue_summary_of_business_results,
+  ordinary_income_summary_of_business_results,
+  net_premiums_written_summary_of_business_results_ins,
+  ordinary_income_loss_summary_of_business_results,
+  net_income_loss_summary_of_business_results,
+  capital_stock_summary_of_business_results,
+  net_assets_summary_of_business_results,
+  total_assets_summary_of_business_results,
+  number_of_employees,
+  major_shareholders,
+FROM
+  ${ref("gbizinfo_staging", "finance_stg")}

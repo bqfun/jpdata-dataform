@@ -1,0 +1,31 @@
+config {
+  type: "table",
+  schema: "gbizinfo",
+  description: "届出認定情報",
+  columns: {
+    corporate_number: "法人番号",
+    name: "法人名",
+    location: "本社所在地",
+    date_of_approval: "認定日",
+    title: "届出認定等",
+    target: "対象",
+    category: "部門",
+    enterprise_scale: "企業規模",
+    expiration_date: "有効期限",
+    government_departments: "府省",
+  },
+}
+
+SELECT
+  corporate_number,
+  name,
+  location,
+  date_of_approval,
+  title,
+  target,
+  category,
+  enterprise_scale,
+  expiration_date,
+  government_departments,
+FROM
+  ${ref("gbizinfo_staging", "certification_stg")}
