@@ -1,0 +1,27 @@
+config {
+  type: "table",
+  schema: "gbizinfo",
+  description: "表彰情報",
+  columns: {
+    corporate_number: "法人番号",
+    name: "法人名",
+    location: "本社所在地",
+    date_of_commendation: "年月日",
+    title: "表彰名",
+    target: "受賞対象",
+    category: "部門",
+    government_departments: "府省",
+  },
+}
+
+SELECT
+  corporate_number,
+  name,
+  location,
+  date_of_commendation,
+  title,
+  target,
+  category,
+  government_departments,
+FROM
+  ${ref("gbizinfo_staging", "commendation_stg")}

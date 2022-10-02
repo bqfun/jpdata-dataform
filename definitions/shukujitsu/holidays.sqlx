@@ -1,0 +1,15 @@
+config {
+  type: "table",
+  schema: "shukujitsu",
+  description: "国民の祝日・休日",
+  columns: {
+    date: "国民の祝日・休日月日",
+    name: "国民の祝日・休日名称",
+  },
+}
+
+SELECT
+  date,
+  name,
+FROM
+  ${ref("shukujitsu_staging", "holidays_stg")}

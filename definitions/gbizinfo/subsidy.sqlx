@@ -1,0 +1,33 @@
+config {
+  type: "table",
+  schema: "gbizinfo",
+  description: "補助金情報",
+  columns: {
+    corporate_number: "法人番号",
+    name: "法人名",
+    location: "本社所在地",
+    date_of_approval: "認定日",
+    title: "補助金等",
+    amount: "金額",
+    target: "対象",
+    government_departments: "府省",
+    note: "備考",
+    joint_signatures: "連名リスト",
+    subsidy_resource: "補助金財源",
+  },
+}
+
+SELECT
+  corporate_number,
+  name,
+  location,
+  date_of_approval,
+  title,
+  amount,
+  target,
+  government_departments,
+  note,
+  joint_signatures,
+  subsidy_resource,
+FROM
+  ${ref("gbizinfo_staging", "subsidy_stg")}

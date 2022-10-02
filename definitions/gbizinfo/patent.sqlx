@@ -1,0 +1,39 @@
+config {
+  type: "table",
+  schema: "gbizinfo",
+  description: "特許情報",
+  columns: {
+    corporate_number: "法人番号",
+    name: "法人名",
+    location: "本社所在地",
+    patent_type: "特許/意匠/商標",
+    application_number: "出願番号",
+    application_date: "出願年月日",
+    patent_classification_fi_code: "特許_FI分類_コード値",
+    patent_classification_fi_name: "特許_FI分類_コード値(日本語)",
+    patent_classification_f_term_theme_code: "特許_Fターム-テーマコード",
+    design_classification_code: "意匠_意匠新分類_コード値",
+    design_classification_name: "意匠_意匠新分類_コード値(日本語)",
+    trademark_classification_code: "商標_類_コード値",
+    trademark_classification_name: "商標_類_コード値(日本語)",
+    title: "発明の名称(等)/意匠に係る物品/表示用商標",
+  },
+}
+
+SELECT
+  corporate_number,
+  name,
+  location,
+  patent_type,
+  application_number,
+  application_date,
+  patent_classification_fi_code,
+  patent_classification_fi_name,
+  patent_classification_f_term_theme_code,
+  design_classification_code,
+  design_classification_name,
+  trademark_classification_code,
+  trademark_classification_name,
+  title,
+FROM
+  ${ref("gbizinfo_staging", "patent_stg")}

@@ -1,0 +1,9 @@
+config {
+  type: "operations",
+  schema: "gbizinfo_staging",
+  hasOutput: true,
+}
+
+CREATE OR REPLACE FUNCTION ${self()}(year STRING) AS (
+  IF(year = "元", 1, CAST(year AS INT64))
+)

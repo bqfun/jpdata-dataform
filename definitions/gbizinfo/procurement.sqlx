@@ -1,0 +1,27 @@
+config {
+  type: "table",
+  schema: "gbizinfo",
+  description: "調達情報",
+  columns: {
+    corporate_number: "法人番号",
+    name: "法人名",
+    location: "本社所在地",
+    date_of_order: "受注日",
+    title: "事業名",
+    amount: "金額",
+    government_departments: "府省",
+    joint_signatures: "連名リスト",
+  },
+}
+
+SELECT
+  corporate_number,
+  name,
+  location,
+  date_of_order,
+  title,
+  amount,
+  government_departments,
+  joint_signatures,
+FROM
+  ${ref("gbizinfo_staging", "procurement_stg")}

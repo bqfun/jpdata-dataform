@@ -1,0 +1,39 @@
+config {
+  type: "view",
+  schema: "gbizinfo_staging",
+  description: "特許情報",
+  columns: {
+    corporate_number: "法人番号",
+    name: "法人名",
+    location: "本社所在地",
+    patent_type: "特許/意匠/商標",
+    application_number: "出願番号",
+    application_date: "出願年月日",
+    patent_classification_fi_code: "特許_FI分類_コード値",
+    patent_classification_fi_name: "特許_FI分類_コード値(日本語)",
+    patent_classification_f_term_theme_code: "特許_Fターム-テーマコード",
+    design_classification_code: "意匠_意匠新分類_コード値",
+    design_classification_name: "意匠_意匠新分類_コード値(日本語)",
+    trademark_classification_code: "商標_類_コード値",
+    trademark_classification_name: "商標_類_コード値(日本語)",
+    title: "発明の名称(等)/意匠に係る物品/表示用商標",
+  },
+}
+
+SELECT
+  IF(corporate_number <> "", corporate_number, ERROR('(corporate_number <> "") IS NOT TRUE')) AS corporate_number,
+  IF(name <> "", name, ERROR('(name <> "") IS NOT TRUE')) AS name,
+  IF(location <> "", location, ERROR('(location <> "") IS NOT TRUE')) AS location,
+  IF(patent_type <> "", patent_type, ERROR('(patent_type <> "") IS NOT TRUE')) AS patent_type,
+  IF(application_number <> "", application_number, ERROR('(application_number <> "") IS NOT TRUE')) AS application_number,
+  PARSE_DATE("%Y-%m-%d", application_date) AS application_date,
+  NULLIF(patent_classification_fi_code, "") AS patent_classification_fi_code,
+  NULLIF(patent_classification_fi_name, "") AS patent_classification_fi_name,
+  NULLIF(patent_classification_f_term_theme_code, "") AS patent_classification_f_term_theme_code,
+  NULLIF(design_classification_code, "") AS design_classification_code,
+  NULLIF(design_classification_name, "") AS design_classification_name,
+  NULLIF(trademark_classification_code, "") AS trademark_classification_code,
+  NULLIF(trademark_classification_name, "") AS trademark_classification_name,
+  IF(title <> "", title, ERROR('(title <> "") IS NOT TRUE')) AS title,
+FROM
+  ${ref("gbizinfo_staging", "patent_raw")}

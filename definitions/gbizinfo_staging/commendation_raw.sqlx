@@ -1,0 +1,22 @@
+config {
+  type: "operations",
+  schema: "gbizinfo_staging",
+  hasOutput: true,
+}
+
+CREATE OR REPLACE EXTERNAL TABLE ${self()} (
+  corporate_number STRING,
+  name__corporate_number STRING,
+  location__corporate_number STRING,
+  name STRING,
+  location STRING,
+  date_of_commendation STRING,
+  title STRING,
+  target STRING,
+  category STRING,
+  government_departments STRING,
+) OPTIONS (
+    allow_quoted_newlines=TRUE,
+    format = 'CSV',
+    uris = ['gs://jpdata-gbizinfo/commendation.csv'],
+    skip_leading_rows = 1)
