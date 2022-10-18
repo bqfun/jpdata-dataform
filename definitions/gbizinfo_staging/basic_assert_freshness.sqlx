@@ -1,0 +1,18 @@
+config {
+  type: "assertion",
+  schema: "gbizinfo_staging",
+  tags: ["daily", "gbizinfo"]
+}
+
+WITH freshness AS (
+  SELECT
+    CURRENT_DATE("Asia/Tokyo") - MAX(update_date) AS delay
+  FROM
+    ${ref("gbizinfo_staging", "basic_stg")} )
+
+SELECT
+  *
+FROM
+  freshness
+WHERE
+  delay >= INTERVAL 7 DAY
