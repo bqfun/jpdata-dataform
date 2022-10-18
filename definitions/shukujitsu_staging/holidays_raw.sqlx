@@ -1,6 +1,7 @@
 config {
   type: "operations",
   schema: "shukujitsu_staging",
+  tags: ["shukujitsu"],
   hasOutput: true,
 }
 

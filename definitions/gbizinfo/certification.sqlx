@@ -1,6 +1,7 @@
 config {
   type: "table",
   schema: "gbizinfo",
+  tags: ["gbizinfo"],
   description: "届出認定情報",
   columns: {
     corporate_number: "法人番号",

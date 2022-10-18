@@ -1,6 +1,7 @@
 config {
   type: "operations",
   schema: "gbizinfo_staging",
+  tags: ["gbizinfo"],
   hasOutput: true,
 }
 
