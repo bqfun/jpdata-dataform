@@ -6,7 +6,7 @@ config {
 
 WITH freshness AS (
   SELECT
-    CURRENT_DATE("Asia/Tokyo") - MAX((fiscal_year_cover_page.end_date) AS delay
+    CURRENT_DATE("Asia/Tokyo") - MAX(fiscal_year_cover_page.end_date) AS delay
   FROM
     ${ref("gbizinfo_staging", "finance_stg")} )
 
