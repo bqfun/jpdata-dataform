@@ -18,5 +18,5 @@ CREATE OR REPLACE EXTERNAL TABLE ${self()} (
 ) OPTIONS (
     allow_quoted_newlines=TRUE,
     format = 'CSV',
-    uris = ['gs://jpdata-gbizinfo/procurement.csv'],
+    uris = ['gs://${dataform.projectConfig.vars.bucketGbizinfo}/procurement.csv'],
     skip_leading_rows = 1)
