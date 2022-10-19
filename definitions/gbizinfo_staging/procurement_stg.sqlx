@@ -1,7 +1,6 @@
 config {
   type: "view",
   schema: "gbizinfo_staging",
-  tags: ["gbizinfo"],
   description: "調達情報",
   columns: {
     corporate_number: "法人番号",

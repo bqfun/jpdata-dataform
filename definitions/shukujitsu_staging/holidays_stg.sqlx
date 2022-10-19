@@ -1,7 +1,6 @@
 config {
   type: "view",
   schema: "shukujitsu_staging",
-  tags: ["shukujitsu"],
   description: "国民の祝日・休日",
   columns: {
     date: "国民の祝日・休日月日",
