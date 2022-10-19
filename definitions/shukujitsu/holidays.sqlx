@@ -1,7 +1,7 @@
 config {
   type: "table",
   schema: "shukujitsu",
-  tags: ["shukujitsu"],
+  tags: ["daily"],
   description: "国民の祝日・休日",
   columns: {
     date: "国民の祝日・休日月日",

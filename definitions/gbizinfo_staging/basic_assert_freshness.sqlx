@@ -1,7 +1,7 @@
 config {
   type: "assertion",
   schema: "gbizinfo_staging",
-  tags: ["daily", "gbizinfo"]
+  tags: ["daily"]
 }
 
 WITH freshness AS (

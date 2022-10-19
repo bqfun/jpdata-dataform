@@ -1,7 +1,7 @@
 config {
   type: "table",
   schema: "gbizinfo",
-  tags: ["gbizinfo"],
+  tags: ["daily"],
   description: "職場情報",
   columns: {
     corporate_number: "法人番号",
