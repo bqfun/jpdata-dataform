@@ -17,7 +17,9 @@ CREATE OR REPLACE EXTERNAL TABLE ${self()} (
   enterprise_scale STRING,
   expiration_date STRING,
   government_departments STRING,
-) OPTIONS (
+)
+  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
+  OPTIONS (
     allow_quoted_newlines=TRUE,
     format = 'CSV',
     uris = ['gs://${dataform.projectConfig.vars.bucketGbizinfo}/certification.csv'],

@@ -26,7 +26,9 @@ CREATE OR REPLACE EXTERNAL TABLE ${self()} (
   number_of_maternity_leave STRING,
   paternity_leave_acquisition_num STRING,
   maternity_leave_acquisition_num STRING,
-) OPTIONS (
+)
+  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
+  OPTIONS (
     allow_quoted_newlines=TRUE,
     format = 'CSV',
     uris = ['gs://${dataform.projectConfig.vars.bucketGbizinfo}/workplace.csv'],
