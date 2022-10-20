@@ -15,7 +15,9 @@ CREATE OR REPLACE EXTERNAL TABLE ${self()} (
   target STRING,
   category STRING,
   government_departments STRING,
-) OPTIONS (
+)
+  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
+  OPTIONS (
     allow_quoted_newlines=TRUE,
     format = 'CSV',
     uris = ['gs://${dataform.projectConfig.vars.bucketGbizinfo}/commendation.csv'],

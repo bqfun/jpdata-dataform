@@ -27,7 +27,9 @@ CREATE OR REPLACE EXTERNAL TABLE ${self()} (
   founding_year STRING,
   update_date STRING,
   unified_qualification STRING,
-) OPTIONS (
+)
+  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
+  OPTIONS (
     allow_quoted_newlines=TRUE,
     format = 'CSV',
     uris = ['gs://${dataform.projectConfig.vars.bucketGbizinfo}/basic.csv'],

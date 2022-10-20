@@ -47,7 +47,9 @@ CREATE OR REPLACE EXTERNAL TABLE ${self()} (
   shareholding_ratio4 STRING,
   name_major_shareholders5 STRING,
   shareholding_ratio5 STRING,
-) OPTIONS (
+)
+  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
+  OPTIONS (
     allow_quoted_newlines=TRUE,
     format = 'CSV',
     uris = ['gs://${dataform.projectConfig.vars.bucketGbizinfo}/finance.csv'],

@@ -21,7 +21,9 @@ CREATE OR REPLACE EXTERNAL TABLE ${self()} (
   trademark_classification_code STRING,
   trademark_classification_name STRING,
   title STRING,
-) OPTIONS (
+)
+  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
+  OPTIONS (
     allow_quoted_newlines=TRUE,
     format = 'CSV',
     uris = ['gs://${dataform.projectConfig.vars.bucketGbizinfo}/patent.csv'],

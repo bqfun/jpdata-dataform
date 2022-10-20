@@ -7,7 +7,9 @@ config {
 CREATE OR REPLACE EXTERNAL TABLE ${self()} (
   date STRING,
   name STRING,
-) OPTIONS (
+)
+  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
+  OPTIONS (
     allow_quoted_newlines=TRUE,
     format = 'CSV',
     uris = ['gs://${dataform.projectConfig.vars.bucketShukujitsu}/syukujitsu.csv'],
