@@ -15,4 +15,4 @@ SELECT
 FROM
   freshness
 WHERE
-  delay >= INTERVAL 28 DAY
+  delay > INTERVAL 31 DAY
