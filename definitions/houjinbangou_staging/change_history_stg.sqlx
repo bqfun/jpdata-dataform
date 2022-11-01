@@ -140,4 +140,4 @@ SELECT
     ELSE ERROR("hihyoji")
   END AS hihyoji,
 FROM
-  ${ref("houjinbangou_staging", "latest_raw")}
+  ${ref("houjinbangou_staging", "change_history_raw")}
