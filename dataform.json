@@ -6,7 +6,6 @@
   "defaultLocation": "asia-northeast1",
   "vars": {
     "connectionID": "jpdata.asia-northeast1.main",
-    "bucketShukujitsu": "jpdata-shukujitsu",
-    "bucketGbizinfo": "jpdata-gbizinfo"
+    "bucketSource": "jpdata-source"
   }
 }

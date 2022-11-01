@@ -22,5 +22,5 @@ CREATE OR REPLACE EXTERNAL TABLE ${self()} (
   OPTIONS (
     allow_quoted_newlines=TRUE,
     format = 'CSV',
-    uris = ['gs://${dataform.projectConfig.vars.bucketGbizinfo}/certification.csv'],
+    uris = ['gs://${dataform.projectConfig.vars.bucketSource}/gbizinfo/certification.csv'],
     skip_leading_rows = 1)
