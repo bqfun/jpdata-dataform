@@ -4,8 +4,10 @@ config {
   tags: ["monthly"],
   description: "最新情報",
   columns: {
+    sequence_number: "一連番号",
     corporate_number: "法人番号",
     process: "処理区分",
+    correct: "訂正区分",
     update_date: "更新年月日",
     change_date: "変更年月日",
     name: "商号又は名称",
@@ -25,6 +27,7 @@ config {
     successor_corporate_number: "承継先法人番号",
     change_cause: "変更事由の詳細",
     assignment_date: "法人番号指定年月日",
+    latest: "最新履歴",
     en_name: "商号又は名称（英語表記）",
     en_prefecture_name: "国内所在地（都道府県）（英語表記）",
     en_city_name: "国内所在地（市区町村丁目番地等）（英語表記）",
@@ -35,8 +38,10 @@ config {
 }
 
 SELECT
+  sequence_number,
   corporate_number,
   process,
+  correct,
   update_date,
   change_date,
   name,
@@ -56,6 +61,7 @@ SELECT
   successor_corporate_number,
   change_cause,
   assignment_date,
+  latest,
   en_name,
   en_prefecture_name,
   en_city_name,
@@ -63,4 +69,4 @@ SELECT
   furigana,
   hihyoji,
 FROM
-  ${ref("houjinbangou_staging", "latest_stg")}
+  ${ref("houjinbangou_staging", "change_history_stg")}
