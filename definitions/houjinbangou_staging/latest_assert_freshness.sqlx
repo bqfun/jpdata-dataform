@@ -1,0 +1,18 @@
+config {
+  type: "assertion",
+  schema: "houjinbangou_staging",
+  tags: ["monthly"]
+}
+
+WITH freshness AS (
+  SELECT
+    CURRENT_DATE("Asia/Tokyo") - MAX(update_date) AS delay
+  FROM
+    ${ref("houjinbangou_staging", "latest_stg")} )
+
+SELECT
+  *
+FROM
+  freshness
+WHERE
+  delay > INTERVAL 31 DAY
