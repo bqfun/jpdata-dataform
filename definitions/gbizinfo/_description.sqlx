@@ -1,0 +1,10 @@
+config {
+  type: "operations",
+  tags: ["once"],
+}
+
+ALTER SCHEMA gbizinfo
+SET OPTIONS (
+  description = '''「gBizINFO」（経済産業省）（https://info.gbiz.go.jp/hojin/DownloadTop）をもとにBQ FUN作成
+
+https://www.meti.go.jp/main/rules.html''')
