@@ -1,0 +1,12 @@
+config {
+  type: "operations",
+  tags: ["once"],
+}
+
+ALTER SCHEMA houjinbangou
+SET OPTIONS (
+  description = '''「法人番号公表サイト」（国税庁）（https://www.houjin-bangou.nta.go.jp/）をもとにBQ FUN作成
+
+このサービスは、国税庁法人番号システムWeb-API機能を利用して取得した情報をもとに作成しているが、サービスの内容は国税庁によって保証されたものではない
+https://www.houjin-bangou.nta.go.jp/shitsumon/shosai.html?selQaId=00122
+''')
