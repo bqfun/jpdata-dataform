@@ -1,0 +1,12 @@
+steps:
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - workflows
+      - run
+      - dataform
+      - '--data'
+      - '{"includedTags":["once"]}'
+      - '--location'
+      - asia-northeast1
+options:
+  logging: CLOUD_LOGGING_ONLY
