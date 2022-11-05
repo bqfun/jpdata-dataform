@@ -6,6 +6,7 @@ config {
 
 ALTER SCHEMA gbizinfo
 SET OPTIONS (
+  labels=[("component","analyticshub")],
   description = '''「gBizINFO」（経済産業省）（https://info.gbiz.go.jp/hojin/DownloadTop）をもとにBQ FUN作成
 
 https://www.meti.go.jp/main/rules.html''')
