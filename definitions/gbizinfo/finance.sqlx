@@ -1,7 +1,6 @@
 config {
   type: "table",
   schema: "gbizinfo",
-  tags: ["daily"],
   description: "財務情報",
   bigquery: {
     labels: {

@@ -1,7 +1,6 @@
 config {
   type: "table",
   schema: "houjinbangou",
-  tags: ["monthly"],
   description: "最新情報",
   bigquery: {
     labels: {

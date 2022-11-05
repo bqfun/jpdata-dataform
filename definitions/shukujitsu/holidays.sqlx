@@ -1,7 +1,6 @@
 config {
   type: "table",
   schema: "shukujitsu",
-  tags: ["daily"],
   description: "国民の祝日・休日",
   bigquery: {
     labels: {
