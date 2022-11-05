@@ -5,8 +5,7 @@ config {
   description: "変更履歴情報",
   bigquery: {
     labels: {
-      source: "https://www.houjin-bangou.nta.go.jp/webapi/",
-      schedule: "0 0 1 * *",
+      freshness: "monthly",
     }
   },
   columns: {
