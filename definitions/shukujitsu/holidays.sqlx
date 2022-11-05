@@ -3,6 +3,12 @@ config {
   schema: "shukujitsu",
   tags: ["daily"],
   description: "国民の祝日・休日",
+  bigquery: {
+    labels: {
+      source: "https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html",
+      schedule: "0 6 * * *",
+    }
+  },
   columns: {
     date: "国民の祝日・休日月日",
     name: "国民の祝日・休日名称",

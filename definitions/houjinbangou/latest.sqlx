@@ -3,6 +3,12 @@ config {
   schema: "houjinbangou",
   tags: ["monthly"],
   description: "最新情報",
+  bigquery: {
+    labels: {
+      source: "https://www.houjin-bangou.nta.go.jp/download/zenken/",
+      schedule: "0 0 1 * *",
+    }
+  },
   columns: {
     corporate_number: "法人番号",
     process: "処理区分",

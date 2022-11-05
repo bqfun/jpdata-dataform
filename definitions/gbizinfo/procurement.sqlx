@@ -3,6 +3,12 @@ config {
   schema: "gbizinfo",
   tags: ["daily"],
   description: "調達情報",
+  bigquery: {
+    labels: {
+      source: "https://info.gbiz.go.jp/hojin/DownloadTop",
+      schedule: "0 9 * * *",
+    }
+  },
   columns: {
     corporate_number: "法人番号",
     name: "法人名",
