@@ -1,12 +1,10 @@
 config {
   type: "table",
   schema: "gbizinfo",
-  tags: ["daily"],
   description: "補助金情報",
   bigquery: {
     labels: {
-      source: "https://info.gbiz.go.jp/hojin/DownloadTop",
-      schedule: "0 9 * * *",
+      freshness: "daily",
     }
   },
   columns: {
