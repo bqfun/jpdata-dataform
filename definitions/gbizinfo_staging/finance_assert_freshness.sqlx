@@ -15,4 +15,4 @@ SELECT
 FROM
   freshness
 WHERE
-  delay >= INTERVAL 98 DAY
+  delay >= INTERVAL 102 DAY
