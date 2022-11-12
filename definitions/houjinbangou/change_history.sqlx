@@ -1,6 +1,7 @@
 config {
   type: "table",
   schema: "houjinbangou",
+  disabled: true,
   tags: ["monthly"],
   description: "変更履歴情報",
   bigquery: {
