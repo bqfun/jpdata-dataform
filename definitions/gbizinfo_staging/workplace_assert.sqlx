@@ -1,0 +1,12 @@
+config {
+  type: "assertion",
+  schema: "gbizinfo_staging",
+  tags: ["daily"]
+}
+
+SELECT
+  COUNT(*) AS num_rows,
+FROM
+  ${ref("gbizinfo_staging", "workplace_stg")}
+HAVING
+  num_rows < 85917 -- 2022-11-13時点の行数

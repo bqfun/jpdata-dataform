@@ -1,0 +1,12 @@
+config {
+  type: "assertion",
+  schema: "shukujitsu_staging",
+  tags: ["monthly"]
+}
+
+SELECT
+  COUNT(*) AS num_rows,
+FROM
+  ${ref("shukujitsu_staging", "holidays_stg")}
+WHERE
+  num_rows < 992 -- 2022-11-13時点の行数

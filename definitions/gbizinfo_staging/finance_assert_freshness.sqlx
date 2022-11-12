@@ -4,15 +4,11 @@ config {
   tags: ["daily"]
 }
 
-WITH freshness AS (
-  SELECT
-    CURRENT_DATE("Asia/Tokyo") - MAX(fiscal_year_cover_page.end_date) AS delay
-  FROM
-    ${ref("gbizinfo_staging", "finance_stg")} )
-
 SELECT
-  *
+  COUNT(*) AS num_rows,
+  CURRENT_DATE("Asia/Tokyo") - MAX(fiscal_year_cover_page.end_date) AS delay,
 FROM
-  freshness
-WHERE
-  delay >= INTERVAL 102 DAY
+  ${ref("gbizinfo_staging", "finance_stg")}
+HAVING
+  num_rows < 22526 -- 2022-11-13時点の行数
+  OR INTERVAL 102 DAY < delay
