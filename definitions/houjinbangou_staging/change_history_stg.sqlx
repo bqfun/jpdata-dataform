@@ -2,7 +2,7 @@ config {
   type: "view",
   schema: "houjinbangou_staging",
   tags: ["once"],
-  description: "最新情報",
+  description: "変更履歴情報",
   columns: {
     sequence_number: "一連番号",
     corporate_number: "法人番号",

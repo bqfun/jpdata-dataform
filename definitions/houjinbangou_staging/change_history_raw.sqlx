@@ -1,7 +1,7 @@
 config {
   type: "operations",
   schema: "houjinbangou_staging",
-  tags: ["once", "https://www.houjin-bangou.nta.go.jp/webapi/"],
+  tags: ["once"],
   hasOutput: true,
 }
 
