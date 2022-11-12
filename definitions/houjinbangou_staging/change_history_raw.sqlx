@@ -1,6 +1,7 @@
 config {
   type: "operations",
   schema: "houjinbangou_staging",
+  disabled: true,
   tags: ["once"],
   hasOutput: true,
 }
