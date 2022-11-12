@@ -4,15 +4,11 @@ config {
   tags: ["daily"]
 }
 
-WITH freshness AS (
-  SELECT
-    CURRENT_DATE("Asia/Tokyo") - MAX(date_of_commendation) AS delay
-  FROM
-    ${ref("gbizinfo_staging", "commendation_stg")} )
-
 SELECT
-  *
+  COUNT(*) AS num_rows,
+  CURRENT_DATE("Asia/Tokyo") - MAX(date_of_commendation) AS delay,
 FROM
-  freshness
-WHERE
-  delay >= INTERVAL 364 DAY
+  ${ref("gbizinfo_staging", "commendation_stg")}
+HAVING
+  num_rows < 63385 -- 2022-11-13時点の行数
+  OR INTERVAL 291 DAY < delay
