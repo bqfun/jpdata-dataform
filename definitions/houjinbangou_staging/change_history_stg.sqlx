@@ -1,6 +1,7 @@
 config {
   type: "view",
   schema: "houjinbangou_staging",
+  disabled: true,
   tags: ["once"],
   description: "変更履歴情報",
   columns: {
