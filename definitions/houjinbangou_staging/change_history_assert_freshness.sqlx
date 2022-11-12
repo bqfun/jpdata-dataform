@@ -1,6 +1,7 @@
 config {
   type: "assertion",
   schema: "houjinbangou_staging",
+  disabled: true,
   tags: ["monthly"]
 }
 
