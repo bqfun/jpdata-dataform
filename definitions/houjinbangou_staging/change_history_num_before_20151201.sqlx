@@ -41,6 +41,6 @@ config {
 SELECT
   *
 FROM
-  ${ref("houjinbangou_staging", "change_history_stg")}
+  ${ref("houjinbangou_staging", "change_history_num_stg")}
 WHERE
   update_date < "2015-12-01"
