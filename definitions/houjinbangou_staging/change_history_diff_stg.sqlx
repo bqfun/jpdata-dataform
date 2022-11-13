@@ -1,7 +1,6 @@
 config {
   type: "view",
   schema: "houjinbangou_staging",
-  disabled: true,
   tags: ["once"],
   description: "変更履歴情報",
   columns: {
@@ -54,10 +53,11 @@ SELECT
     WHEN "99" THEN "削除"
     ELSE ERROR("process")
   END AS process,
-  CASE correct
-    WHEN "0" THEN FALSE -- "訂正以外"
-    WHEN "1" THEN TRUE -- "訂正"
-    ELSE ERROR("process")
+  CASE
+    WHEN correct = "0" THEN FALSE -- "訂正以外"
+    WHEN correct = "1" THEN TRUE -- "訂正"
+    WHEN correct IS NULL THEN NULL
+    ELSE ERROR(FORMAT("correct: %T", correct))
   END AS correct,
   PARSE_DATE("%Y-%m-%d", update_date) AS update_date,
   PARSE_DATE("%Y-%m-%d", change_date) AS change_date,
@@ -67,18 +67,19 @@ SELECT
     WHEN REGEXP_CONTAINS(name_image_id, "^[0-9]{8}$") THEN name_image_id
     ELSE ERROR("name_image_id")
   END AS name_image_id,
-  CASE kind
-    WHEN "101" THEN "国の機関"
-    WHEN "201" THEN "地方公共団体"
-    WHEN "301" THEN "株式会社"
-    WHEN "302" THEN "有限会社"
-    WHEN "303" THEN "合名会社"
-    WHEN "304" THEN "合資会社"
-    WHEN "305" THEN "合同会社"
-    WHEN "399" THEN "その他の設立登記法人"
-    WHEN "401" THEN "外国会社等"
-    WHEN "499" THEN "その他"
-    ELSE ERROR("kind")
+  CASE
+    WHEN kind = "101" THEN "国の機関"
+    WHEN kind = "201" THEN "地方公共団体"
+    WHEN kind = "301" THEN "株式会社"
+    WHEN kind = "302" THEN "有限会社"
+    WHEN kind = "303" THEN "合名会社"
+    WHEN kind = "304" THEN "合資会社"
+    WHEN kind = "305" THEN "合同会社"
+    WHEN kind = "399" THEN "その他の設立登記法人"
+    WHEN kind = "401" THEN "外国会社等"
+    WHEN kind = "499" THEN "その他"
+    WHEN kind IS NULL THEN NULL
+    ELSE ERROR(FORMAT("kind: %T", kind))
   END AS kind,
   prefecture_name,
   city_name,
@@ -125,20 +126,22 @@ SELECT
   END AS successor_corporate_number,
   change_cause,
   PARSE_DATE("%Y-%m-%d", assignment_date) AS assignment_date,
-  CASE latest
-    WHEN "0" THEN FALSE -- "過去情報"
-    WHEN "1" THEN TRUE -- "最新情報"
-    ELSE ERROR("latest")
+  CASE
+    WHEN latest = "0" THEN FALSE -- "過去情報"
+    WHEN latest = "1" THEN TRUE -- "最新情報"
+    WHEN latest IS NULL THEN NULL
+    ELSE ERROR(FORMAT("latest: %T", latest))
   END AS latest,
   en_name,
   en_prefecture_name,
   en_city_name,
   en_address_outside,
   furigana,
-  CASE hihyoji
-    WHEN "0" THEN FALSE -- "検索対象"
-    WHEN "1" THEN TRUE -- "検索対象除外"
-    ELSE ERROR("hihyoji")
+  CASE
+    WHEN hihyoji = "0" THEN FALSE -- "検索対象"
+    WHEN hihyoji = "1" THEN TRUE -- "検索対象除外"
+    WHEN hihyoji IS NULL THEN NULL
+    ELSE ERROR(FORMAT("hihyoji: %T", hihyoji))
   END AS hihyoji,
 FROM
-  ${ref("houjinbangou_staging", "change_history_raw")}
+  ${ref("houjinbangou_staging", "change_history_diff_raw")}
