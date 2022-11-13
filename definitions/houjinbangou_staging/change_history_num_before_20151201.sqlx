@@ -1,13 +1,9 @@
 config {
   type: "table",
-  schema: "houjinbangou",
-  tags: ["daily"],
-  description: "変更履歴情報",
-  bigquery: {
-    labels: {
-      freshness: "daily",
-    }
-  },
+  schema: "houjinbangou_staging",
+  disabled: true,
+  tags: ["yearly"],
+  description: "変更履歴情報（diff apiで取得できない2015-12-01より前のデータ）",
   columns: {
     sequence_number: "一連番号",
     corporate_number: "法人番号",
@@ -42,46 +38,9 @@ config {
   },
 }
 
-WITH change_history AS (
-  SELECT
-    *
-  FROM
-    ${ref("houjinbangou_staging", "change_history_diff_stg")}
-  UNION ALL
-  SELECT
-    *
-  FROM
-    ${ref("houjinbangou_staging", "change_history_num_before_20151201")} )
 SELECT
-  sequence_number,
-  corporate_number,
-  process,
-  correct,
-  update_date,
-  change_date,
-  name,
-  name_image_id,
-  kind,
-  prefecture_name,
-  city_name,
-  street_number,
-  address_image_id,
-  prefecture_code,
-  city_code,
-  post_code,
-  address_outside,
-  address_outside_image_id,
-  close_date,
-  close_cause,
-  successor_corporate_number,
-  change_cause,
-  assignment_date,
-  ROW_NUMBER()OVER(PARTITION BY corporate_number ORDER BY update_date DESC, sequence_number DESC) = 1 AS latest,
-  en_name,
-  en_prefecture_name,
-  en_city_name,
-  en_address_outside,
-  furigana,
-  hihyoji,
+  *
 FROM
-  change_history
+  ${ref("houjinbangou_staging", "change_history_stg")}
+WHERE
+  update_date < "2015-12-01"

@@ -1,0 +1,143 @@
+config {
+  type: "view",
+  schema: "houjinbangou_staging",
+  tags: ["once"],
+  description: "変更履歴情報",
+  columns: {
+    sequence_number: "一連番号",
+    corporate_number: "法人番号",
+    process: "処理区分",
+    correct: "訂正区分",
+    update_date: "更新年月日",
+    change_date: "変更年月日",
+    name: "商号又は名称",
+    name_image_id: "商号又は名称イメージID",
+    kind: "法人種別",
+    prefecture_name: "国内所在地（都道府県）",
+    city_name: "国内所在地（市区町村）",
+    street_number: "国内所在地（丁目番地等）",
+    address_image_id: "国内所在地イメージID",
+    prefecture_code: "都道府県コード",
+    city_code: "市区町村コード",
+    post_code: "郵便番号",
+    address_outside: "国外所在地",
+    address_outside_image_id: "国外所在地イメージID",
+    close_date: "登記記録の閉鎖等年月日",
+    close_cause: "登記記録の閉鎖等の事由",
+    successor_corporate_number: "承継先法人番号",
+    change_cause: "変更事由の詳細",
+    assignment_date: "法人番号指定年月日",
+    latest: "最新履歴",
+    en_name: "商号又は名称（英語表記）",
+    en_prefecture_name: "国内所在地（都道府県）（英語表記）",
+    en_city_name: "国内所在地（市区町村丁目番地等）（英語表記）",
+    en_address_outside: "国外所在地（英語表記）",
+    furigana: "フリガナ",
+    hihyoji: "検索対象除外",
+  },
+}
+
+SELECT
+  CAST(sequence_number AS INT64) AS sequence_number,
+  IF(REGEXP_CONTAINS(corporate_number, "^[0-9]{13}$"), corporate_number, ERROR("corporate_number")) AS corporate_number,
+  CASE process
+    WHEN "01" THEN "新規"
+    WHEN "11" THEN "商号又は名称の変更"
+    WHEN "12" THEN "国内所在地の変更"
+    WHEN "13" THEN "国外所在地の変更"
+    WHEN "21" THEN "登記記録の閉鎖等"
+    WHEN "22" THEN "登記記録の復活等"
+    WHEN "71" THEN "吸収合併"
+    WHEN "72" THEN "吸収合併無効"
+    WHEN "81" THEN "商号の登記の抹消"
+    WHEN "99" THEN "削除"
+    ELSE ERROR("process")
+  END AS process,
+  CASE correct
+    WHEN "0" THEN FALSE -- "訂正以外"
+    WHEN "1" THEN TRUE -- "訂正"
+    ELSE ERROR("correct")
+  END AS correct,
+  PARSE_DATE("%Y-%m-%d", update_date) AS update_date,
+  PARSE_DATE("%Y-%m-%d", change_date) AS change_date,
+  name,
+  CASE
+    WHEN name_image_id IS NULL THEN NULL
+    WHEN REGEXP_CONTAINS(name_image_id, "^[0-9]{8}$") THEN name_image_id
+    ELSE ERROR("name_image_id")
+  END AS name_image_id,
+  CASE kind
+    WHEN "101" THEN "国の機関"
+    WHEN "201" THEN "地方公共団体"
+    WHEN "301" THEN "株式会社"
+    WHEN "302" THEN "有限会社"
+    WHEN "303" THEN "合名会社"
+    WHEN "304" THEN "合資会社"
+    WHEN "305" THEN "合同会社"
+    WHEN "399" THEN "その他の設立登記法人"
+    WHEN "401" THEN "外国会社等"
+    WHEN "499" THEN "その他"
+    ELSE ERROR("kind")
+  END AS kind,
+  prefecture_name,
+  city_name,
+  street_number,
+  CASE
+    WHEN address_image_id IS NULL THEN NULL
+    WHEN REGEXP_CONTAINS(address_image_id, "^[0-9]{8}$") THEN address_image_id
+    ELSE ERROR("address_image_id")
+  END AS address_image_id,
+  CASE
+    WHEN prefecture_code IS NULL THEN NULL
+    WHEN REGEXP_CONTAINS(prefecture_code, "^[0-9]{2}$") THEN prefecture_code
+    ELSE ERROR("prefecture_code: " || prefecture_code)
+  END AS prefecture_code,
+  CASE
+    WHEN city_code IS NULL THEN NULL
+    WHEN REGEXP_CONTAINS(city_code, "^[0-9]{3}$") THEN city_code
+    ELSE ERROR("city_code: " || city_code)
+  END AS city_code,
+  CASE
+    WHEN post_code IS NULL THEN NULL
+    WHEN REGEXP_CONTAINS(post_code, "^[0-9]{7}$") THEN post_code
+    ELSE ERROR("post_code: " || post_code)
+  END AS post_code,
+  address_outside,
+  CASE
+    WHEN address_outside_image_id IS NULL THEN NULL
+    WHEN REGEXP_CONTAINS(address_outside_image_id, "^[0-9]{8}$") THEN address_outside_image_id
+    ELSE ERROR("address_outside_image_id")
+  END AS address_outside_image_id,
+  PARSE_DATE("%Y-%m-%d", close_date) AS close_date,
+  CASE
+    WHEN close_cause IS NULL THEN NULL
+    WHEN close_cause = "01" THEN "清算の結了等"
+    WHEN close_cause = "11" THEN "合併による解散等"
+    WHEN close_cause = "21" THEN "登記官による閉鎖"
+    WHEN close_cause = "31" THEN "その他の清算の結了等"
+    ELSE ERROR("close_cause: " || close_cause)
+  END AS close_cause,
+  CASE
+    WHEN successor_corporate_number IS NULL THEN NULL
+    WHEN REGEXP_CONTAINS(successor_corporate_number, "^[0-9]{13}$") THEN successor_corporate_number
+    ELSE ERROR("successor_corporate_number")
+  END AS successor_corporate_number,
+  change_cause,
+  PARSE_DATE("%Y-%m-%d", assignment_date) AS assignment_date,
+  CASE latest
+    WHEN "0" THEN FALSE -- "過去情報"
+    WHEN "1" THEN TRUE -- "最新情報"
+    ELSE ERROR("latest")
+  END AS latest,
+  en_name,
+  en_prefecture_name,
+  en_city_name,
+  en_address_outside,
+  furigana,
+  CASE hihyoji
+    WHEN "0" THEN FALSE -- "検索対象"
+    WHEN "1" THEN TRUE -- "検索対象除外"
+    ELSE ERROR("hihyoji")
+  END AS hihyoji,
+FROM
+  ${ref("houjinbangou_staging", "change_history_num_raw")}
