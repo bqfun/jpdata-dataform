@@ -1,12 +1,7 @@
 config {
-  type: "table",
-  schema: "houjinbangou",
+  type: "view",
+  schema: "houjinbangou_staging",
   description: "変更履歴情報",
-  bigquery: {
-    labels: {
-      freshness: "daily",
-    }
-  },
   columns: {
     sequence_number: "一連番号",
     corporate_number: "法人番号",
@@ -41,6 +36,16 @@ config {
   },
 }
 
+WITH change_history AS (
+  SELECT
+    *
+  FROM
+    ${ref("houjinbangou_staging", "change_history_diff_stg")}
+  UNION ALL
+  SELECT
+    *
+  FROM
+    ${ref("houjinbangou_staging", "change_history_num_before_20151201")} )
 SELECT
   sequence_number,
   corporate_number,
@@ -65,7 +70,7 @@ SELECT
   successor_corporate_number,
   change_cause,
   assignment_date,
-  latest,
+  ROW_NUMBER()OVER(PARTITION BY corporate_number ORDER BY update_date DESC, sequence_number DESC) = 1 AS latest,
   en_name,
   en_prefecture_name,
   en_city_name,
@@ -73,4 +78,4 @@ SELECT
   furigana,
   hihyoji,
 FROM
-  ${ref("houjinbangou_staging", "change_history_stg")}
+  change_history
