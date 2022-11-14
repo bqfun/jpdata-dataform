@@ -2,6 +2,7 @@ config {
   type: "table",
   schema: "gbizinfo",
   description: "表彰情報",
+  dependencies: ["commendation_assert"],
   bigquery: {
     labels: {
       freshness: "daily",

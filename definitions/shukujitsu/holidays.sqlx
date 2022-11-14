@@ -2,6 +2,7 @@ config {
   type: "table",
   schema: "shukujitsu",
   description: "国民の祝日・休日",
+  dependencies: ["holidays_assert"],
   bigquery: {
     labels: {
       freshness: "daily",

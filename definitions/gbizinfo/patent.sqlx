@@ -2,6 +2,7 @@ config {
   type: "table",
   schema: "gbizinfo",
   description: "特許情報",
+  dependencies: ["patent_assert"],
   bigquery: {
     labels: {
       freshness: "daily",

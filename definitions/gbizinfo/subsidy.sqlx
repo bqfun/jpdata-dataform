@@ -2,6 +2,7 @@ config {
   type: "table",
   schema: "gbizinfo",
   description: "補助金情報",
+  dependencies: ["subsidy_assert"],
   bigquery: {
     labels: {
       freshness: "daily",

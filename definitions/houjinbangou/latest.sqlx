@@ -2,6 +2,7 @@ config {
   type: "table",
   schema: "houjinbangou",
   description: "最新情報",
+  dependencies: ["latest_assert"],
   bigquery: {
     labels: {
       freshness: "monthly",
