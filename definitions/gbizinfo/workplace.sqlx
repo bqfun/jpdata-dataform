@@ -2,6 +2,7 @@ config {
   type: "table",
   schema: "gbizinfo",
   description: "職場情報",
+  dependencies: ["workplace_assert"],
   bigquery: {
     labels: {
       freshness: "daily",

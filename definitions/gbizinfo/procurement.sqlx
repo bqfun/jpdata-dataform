@@ -2,6 +2,7 @@ config {
   type: "table",
   schema: "gbizinfo",
   description: "調達情報",
+  dependencies: ["procurement_assert"],
   bigquery: {
     labels: {
       freshness: "daily",

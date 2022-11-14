@@ -7,8 +7,20 @@ config {
 ALTER SCHEMA houjinbangou
 SET OPTIONS (
   labels=[("component","analyticshub")],
-  description = '''「法人番号公表サイト」（国税庁）（https://www.houjin-bangou.nta.go.jp/）をもとにBQ FUN作成
+  description = TRIM('''
+# 日本の法人情報 Corporate Number preprocessed by BQ FUN
+法人番号を持っている組織の情報をまとめたものです。
 
-このサービスは、国税庁法人番号システムWeb-API機能を利用して取得した情報をもとに作成しているが、サービスの内容は国税庁によって保証されたものではない
-https://www.houjin-bangou.nta.go.jp/shitsumon/shosai.html?selQaId=00122
-''')
+「法人番号公表サイト」（国税庁）（https://www.houjin-bangou.nta.go.jp/ ）をもとにBigQueryユーザコミュニティBQ FUNが加工して作成しています。
+このサービスは、国税庁法人番号システムWeb-API 機能を利用して取得した情報をもとに作成しているが、サービスの内容は国税庁によって保証されたものではない
+
+BQ FUNは、利用者が本コンテンツを用いて行う一切の責任を負いません。
+また、予告なく変更、削除される場合があります。
+
+このデータセットはCC BY 4.0で提供されています。
+https://creativecommons.org/licenses/by/4.0/legalcode.ja
+
+データセットの作成過程と、用いられている権利物はこちらのURLから確認できます。
+https://github.com/bqfun/jpdata
+https://github.com/bqfun/jpdata-dataform
+'''))

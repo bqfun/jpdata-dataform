@@ -3,6 +3,7 @@ config {
   schema: "houjinbangou",
   tags: ["daily"],
   description: "変更履歴情報",
+  dependencies: ["change_history_diff_assert"],
   bigquery: {
     labels: {
       freshness: "daily",

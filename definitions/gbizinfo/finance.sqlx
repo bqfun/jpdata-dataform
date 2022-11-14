@@ -2,6 +2,7 @@ config {
   type: "table",
   schema: "gbizinfo",
   description: "財務情報",
+  dependencies: ["finance_assert"],
   bigquery: {
     labels: {
       freshness: "daily",
