@@ -11,4 +11,4 @@ FROM
   ${ref("gbizinfo_staging", "commendation_stg")}
 HAVING
   num_rows < 63385 -- 2022-11-13時点の行数
-  OR INTERVAL 291 DAY < delay
+  OR INTERVAL 294 DAY < delay

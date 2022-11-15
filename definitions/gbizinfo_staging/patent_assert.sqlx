@@ -11,4 +11,4 @@ FROM
   ${ref("gbizinfo_staging", "patent_stg")}
 HAVING
   num_rows < 4370781 -- 2022-11-13時点の行数
-  OR INTERVAL 319 DAY < delay
+  OR INTERVAL 322 DAY < delay

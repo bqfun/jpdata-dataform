@@ -11,4 +11,4 @@ FROM
   ${ref("gbizinfo_staging", "procurement_stg")}
 HAVING
   num_rows < 336752 -- 2022-11-13時点の行数
-  OR INTERVAL 74 DAY < delay
+  OR INTERVAL 77 DAY < delay

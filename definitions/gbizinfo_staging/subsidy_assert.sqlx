@@ -11,4 +11,4 @@ FROM
   ${ref("gbizinfo_staging", "subsidy_stg")}
 HAVING
   num_rows < 576860 -- 2022-11-13時点の行数
-  OR INTERVAL 261 DAY < delay
+  OR INTERVAL 264 DAY < delay
