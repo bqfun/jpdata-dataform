@@ -9,4 +9,4 @@ SELECT
 FROM
   ${ref("gbizinfo_staging", "subsidy_stg")}
 HAVING
-  INTERVAL 264 DAY < delay
+  INTERVAL 272 DAY < delay
