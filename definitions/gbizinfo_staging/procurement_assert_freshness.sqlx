@@ -5,8 +5,8 @@ config {
 }
 
 SELECT
-  COUNT(*) AS num_rows,
+  CURRENT_DATE("Asia/Tokyo") - MAX(date_of_order) AS delay,
 FROM
   ${ref("gbizinfo_staging", "procurement_stg")}
 HAVING
-  num_rows < 336752 -- 2022-11-13時点の行数
+  INTERVAL 77 DAY < delay
