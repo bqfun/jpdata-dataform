@@ -1,7 +1,7 @@
 config {
   type: "operations",
   schema: "houjinbangou_staging",
-  tags: ["change_history_diff/*"],
+  tags: ["houjinbangou/diff/*"],
   hasOutput: true,
 }
 
