@@ -9,4 +9,4 @@ SELECT
 FROM
   ${ref("gbizinfo_staging", "procurement_stg")}
 HAVING
-  INTERVAL 77 DAY < delay
+  INTERVAL 85 DAY < delay
