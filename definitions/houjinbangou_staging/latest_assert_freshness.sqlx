@@ -5,8 +5,8 @@ config {
 }
 
 SELECT
-  COUNT(*) AS num_rows,
+  CURRENT_DATE("Asia/Tokyo") - MAX(update_date) AS delay,
 FROM
   ${ref("houjinbangou_staging", "latest_stg")}
 HAVING
-  num_rows < 5231297 -- 2022-11-13時点の行数
+  INTERVAL 32 DAY < delay

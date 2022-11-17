@@ -5,8 +5,8 @@ config {
 }
 
 SELECT
-  COUNT(*) AS num_rows,
+  CURRENT_DATE("Asia/Tokyo") - MAX(date_of_approval) AS delay,
 FROM
   ${ref("gbizinfo_staging", "certification_stg")}
 HAVING
-  num_rows < 143716 -- 2022-11-13時点の行数
+  INTERVAL 39 DAY < delay
