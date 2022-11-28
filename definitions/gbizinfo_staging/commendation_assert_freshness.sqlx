@@ -9,4 +9,4 @@ SELECT
 FROM
   ${ref("gbizinfo_staging", "commendation_stg")}
 HAVING
-  INTERVAL 302 DAY < delay
+  INTERVAL 307 DAY < delay
