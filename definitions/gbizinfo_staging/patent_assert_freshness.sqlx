@@ -9,4 +9,4 @@ SELECT
 FROM
   ${ref("gbizinfo_staging", "patent_stg")}
 HAVING
-  INTERVAL 335 DAY < delay
+  INTERVAL 358 DAY < delay
