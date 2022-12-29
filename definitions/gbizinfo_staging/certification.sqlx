@@ -29,4 +29,3 @@ LOAD DATA OVERWRITE ${self()}
     uris = ['gs://${dataform.projectConfig.vars.bucketEventarc}/gbizinfo/certification.csv'],
     skip_leading_rows = 1
   )
-  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`

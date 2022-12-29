@@ -27,19 +27,19 @@ config {
 }
 
 SELECT
-  corporate_number,
-  name,
-  location,
-  patent_type,
-  application_number,
-  application_date,
-  patent_classification_fi_code,
-  patent_classification_fi_name,
-  patent_classification_f_term_theme_code,
-  design_classification_code,
-  design_classification_name,
-  trademark_classification_code,
-  trademark_classification_name,
-  title,
+  IF(corporate_number <> "", corporate_number, ERROR('(corporate_number <> "") IS NOT TRUE')) AS corporate_number,
+  IF(name <> "", name, ERROR('(name <> "") IS NOT TRUE')) AS name,
+  IF(location <> "", location, ERROR('(location <> "") IS NOT TRUE')) AS location,
+  IF(patent_type <> "", patent_type, ERROR('(patent_type <> "") IS NOT TRUE')) AS patent_type,
+  IF(application_number <> "", application_number, ERROR('(application_number <> "") IS NOT TRUE')) AS application_number,
+  PARSE_DATE("%Y-%m-%d", application_date) AS application_date,
+  NULLIF(patent_classification_fi_code, "") AS patent_classification_fi_code,
+  NULLIF(patent_classification_fi_name, "") AS patent_classification_fi_name,
+  NULLIF(patent_classification_f_term_theme_code, "") AS patent_classification_f_term_theme_code,
+  NULLIF(design_classification_code, "") AS design_classification_code,
+  NULLIF(design_classification_name, "") AS design_classification_name,
+  NULLIF(trademark_classification_code, "") AS trademark_classification_code,
+  NULLIF(trademark_classification_name, "") AS trademark_classification_name,
+  IF(title <> "", title, ERROR('(title <> "") IS NOT TRUE')) AS title,
 FROM
-  ${ref("gbizinfo_staging", "patent_stg")}
+  ${ref("gbizinfo_staging", "patent")}

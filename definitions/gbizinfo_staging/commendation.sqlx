@@ -1,7 +1,7 @@
 config {
   type: "operations",
   schema: "gbizinfo_staging",
-  tags: ["gbizinfo/procurement.csv"],
+  tags: ["gbizinfo/commendation.csv"],
   hasOutput: true,
 }
 
@@ -12,19 +12,18 @@ LOAD DATA OVERWRITE ${self()}
     location__corporate_number STRING,
     name STRING,
     location STRING,
-    date_of_order STRING,
+    date_of_commendation STRING,
     title STRING,
-    amount STRING,
+    target STRING,
+    category STRING,
     government_departments STRING,
-    joint_signatures STRING,
   )
   OPTIONS (
-    description = "gs://${dataform.projectConfig.vars.bucketEventarc}/gbizinfo/procurement.csv"
+    description = "gs://${dataform.projectConfig.vars.bucketEventarc}/gbizinfo/commendation.csv"
   )
   FROM FILES(
     allow_quoted_newlines=TRUE,
     format = 'CSV',
-    uris = ['gs://${dataform.projectConfig.vars.bucketEventarc}/gbizinfo/procurement.csv'],
+    uris = ['gs://${dataform.projectConfig.vars.bucketEventarc}/gbizinfo/commendation.csv'],
     skip_leading_rows = 1
   )
-  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`

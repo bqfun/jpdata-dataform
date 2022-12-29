@@ -11,7 +11,7 @@ LOAD DATA OVERWRITE ${self()}
     corporate_number STRING,
     process STRING,
     correct STRING,
-    update_date STRING,
+    update_date DATE,
     change_date STRING,
     name STRING,
     name_image_id STRING,
@@ -38,6 +38,7 @@ LOAD DATA OVERWRITE ${self()}
     furigana STRING,
     hihyoji STRING,
   )
+  PARTITION BY update_date
   OPTIONS (
     description = "gs://${dataform.projectConfig.vars.bucket}/houjinbangou/diff/*"
   )
@@ -46,4 +47,3 @@ LOAD DATA OVERWRITE ${self()}
     skip_leading_rows = 1,
     uris = ['gs://${dataform.projectConfig.vars.bucket}/houjinbangou/diff/*']
   )
-  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`

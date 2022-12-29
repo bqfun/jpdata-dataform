@@ -7,6 +7,6 @@ config {
 SELECT
   CURRENT_DATE("Asia/Tokyo") - MAX(update_date) AS delay,
 FROM
-  ${ref("houjinbangou_staging", "change_history_diff_stg")}
+  ${ref("houjinbangou_staging", "change_history_diff")}
 HAVING
   INTERVAL 3 DAY < delay

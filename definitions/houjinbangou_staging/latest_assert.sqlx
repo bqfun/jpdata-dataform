@@ -7,6 +7,6 @@ config {
 SELECT
   COUNT(*) AS num_rows,
 FROM
-  ${ref("houjinbangou_staging", "latest_stg")}
+  ${ref("houjinbangou_staging", "latest")}
 HAVING
-  num_rows < 5231297 -- 2022-11-13時点の行数
+  num_rows < 5243919 -- 2022-12-30時点の行数

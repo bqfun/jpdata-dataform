@@ -5,8 +5,8 @@ config {
 }
 
 SELECT
-  CURRENT_DATE("Asia/Tokyo") - MAX(update_date) AS delay,
+  CURRENT_DATE("Asia/Tokyo") - PARSE_DATE("%Y-%m-%d", MAX(update_date)) AS delay,
 FROM
-  ${ref("houjinbangou_staging", "latest_stg")}
+  ${ref("houjinbangou_staging", "latest")}
 HAVING
   INTERVAL 32 DAY < delay

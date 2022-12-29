@@ -5,8 +5,12 @@ config {
 }
 
 SELECT
-  CURRENT_DATE("Asia/Tokyo") - MAX(fiscal_year_cover_page.end_date) AS delay,
+  CURRENT_DATE("Asia/Tokyo") - MAX(COALESCE(
+    gbizinfo_staging.to_date(REGEXP_EXTRACT(fiscal_year_cover_page, r"^自.+至(.+)$")),
+    gbizinfo_staging.to_date(REGEXP_EXTRACT(fiscal_year_cover_page, r"^.+から(.+)まで$")),
+    ERROR("Unsupported fiscal_year_cover_page: " || IFNULL(fiscal_year_cover_page, "null"))
+  )) AS delay,
 FROM
-  ${ref("gbizinfo_staging", "finance_stg")}
+  ${ref("gbizinfo_staging", "finance")}
 HAVING
   INTERVAL 102 DAY < delay

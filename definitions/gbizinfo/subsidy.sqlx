@@ -24,16 +24,16 @@ config {
 }
 
 SELECT
-  corporate_number,
-  name,
-  location,
-  date_of_approval,
-  title,
-  amount,
-  target,
-  government_departments,
-  note,
-  joint_signatures,
-  subsidy_resource,
+  IF(corporate_number <> "", corporate_number, ERROR('(corporate_number <> "") IS NOT TRUE')) AS corporate_number,
+  IF(name <> "", name, ERROR('(name <> "") IS NOT TRUE')) AS name,
+  NULLIF(location, "") AS location,
+  PARSE_DATE("%Y-%m-%d", NULLIF(date_of_approval, "")) AS date_of_approval,
+  NULLIF(title, "") AS title,
+  CAST(NULLIF(amount, "") AS INT64) AS amount,
+  NULLIF(target, "") AS target,
+  IF(government_departments <> "", government_departments, ERROR('(government_departments <> "") IS NOT TRUE')) AS government_departments,
+  NULLIF(note, "") AS note,
+  SPLIT(NULLIF(joint_signatures, ""), "、") AS joint_signatures,
+  NULLIF(subsidy_resource, "") AS subsidy_resource,
 FROM
-  ${ref("gbizinfo_staging", "subsidy_stg")}
+  ${ref("gbizinfo_staging", "subsidy")}

@@ -6,15 +6,19 @@ config {
 }
 
 CREATE OR REPLACE FUNCTION ${self()}(s STRING) AS (
-  DATE(
-    CASE REGEXP_EXTRACT(s, r"^(令和|平成|)(?:元|\d+)年\d{1,2}月\d{1,2}日$")
-      WHEN "令和" THEN 2018
-      WHEN "平成" THEN 1988
-      WHEN "" THEN 0
-      ELSE ERROR(s)
-    END
-    + ${ref("gbizinfo_staging", "to_year")}(REGEXP_EXTRACT(s, r"^(?:令和|平成|)(元|\d+)年\d{1,2}月\d{1,2}日$")),
-    CAST(REGEXP_EXTRACT(s, r"^(?:令和|平成|)(?:元|\d+)年(\d{1,2})月\d{1,2}日$") AS INT64),
-    CAST(REGEXP_EXTRACT(s, r"^(?:令和|平成|)(?:元|\d+)年\d{1,2}月(\d{1,2})日$") AS INT64)
+  IF(
+    s IS NULL,
+    NULL,
+    DATE(
+      CASE REGEXP_EXTRACT(s, r"^(令和|平成|)(?:元|\d+)年\d{1,2}月\d{1,2}日$")
+        WHEN "令和" THEN 2018
+        WHEN "平成" THEN 1988
+        WHEN "" THEN 0
+        ELSE ERROR(s)
+      END
+      + ${ref("gbizinfo_staging", "to_year")}(REGEXP_EXTRACT(s, r"^(?:令和|平成|)(元|\d+)年\d{1,2}月\d{1,2}日$")),
+      CAST(REGEXP_EXTRACT(s, r"^(?:令和|平成|)(?:元|\d+)年(\d{1,2})月\d{1,2}日$") AS INT64),
+      CAST(REGEXP_EXTRACT(s, r"^(?:令和|平成|)(?:元|\d+)年\d{1,2}月(\d{1,2})日$") AS INT64)
+    )
   )
 )

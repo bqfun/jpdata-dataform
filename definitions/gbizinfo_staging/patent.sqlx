@@ -33,4 +33,3 @@ LOAD DATA OVERWRITE ${self()}
     uris = ['gs://${dataform.projectConfig.vars.bucketEventarc}/gbizinfo/patent.csv'],
     skip_leading_rows = 1
   )
-  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`

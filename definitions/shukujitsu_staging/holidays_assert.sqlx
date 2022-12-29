@@ -7,6 +7,6 @@ config {
 SELECT
   COUNT(*) AS num_rows,
 FROM
-  ${ref("shukujitsu_staging", "holidays_stg")}
+  ${ref("shukujitsu_staging", "holidays")}
 HAVING
   num_rows < 992 -- 2022-11-13時点の行数

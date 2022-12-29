@@ -7,6 +7,6 @@ config {
 SELECT
   COUNT(*) AS num_rows,
 FROM
-  ${ref("gbizinfo_staging", "workplace_stg")}
+  ${ref("gbizinfo_staging", "workplace")}
 HAVING
-  num_rows < 85917 -- 2022-11-13時点の行数
+  num_rows < 86741 -- 2022-12-30時点の行数
