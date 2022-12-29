@@ -10,7 +10,16 @@ SELECT
     gbizinfo_staging.to_date(REGEXP_EXTRACT(fiscal_year_cover_page, r"^.+から(.+)まで$")),
     ERROR("Unsupported fiscal_year_cover_page: " || IFNULL(fiscal_year_cover_page, "null"))
   )) AS delay,
-FROM
-  ${ref("gbizinfo_staging", "finance")}
+FROM (
+  SELECT
+    *REPLACE(
+      REGEXP_EXTRACT(
+        REGEXP_REPLACE(NORMALIZE(fiscal_year_cover_page, NFKC), r"\p{Space}", ""),
+        r"^(?:\d{4}年\d{1,2}月期\(第\d+期\)|\d{4}年\d{1,2}月期|\d{4}年度?|第\d+期\(\d{4}年\d{1,2}月期\)|第\d+期|\(第\d+期\))\((.+)\)$"
+      ) AS fiscal_year_cover_page
+    )
+  FROM
+    ${ref("gbizinfo_staging", "finance")}
+)
 HAVING
   INTERVAL 102 DAY < delay
