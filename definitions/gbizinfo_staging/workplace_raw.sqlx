@@ -5,32 +5,37 @@ config {
   hasOutput: true,
 }
 
-CREATE OR REPLACE EXTERNAL TABLE ${self()} (
-  corporate_number STRING,
-  name__corporate_number STRING,
-  location__corporate_number STRING,
-  name STRING,
-  location STRING,
-  average_continuous_service_years_type STRING,
-  average_continuous_service_years_male STRING,
-  average_continuous_service_years_female STRING,
-  average_continuous_service_years STRING,
-  average_age STRING,
-  month_average_predetermined_overtime_hours STRING,
-  female_workers_proportion_type STRING,
-  female_workers_proportion STRING,
-  female_share_of_manager STRING,
-  gender_total_of_manager STRING,
-  female_share_of_officers STRING,
-  gender_total_of_officers STRING,
-  number_of_paternity_leave STRING,
-  number_of_maternity_leave STRING,
-  paternity_leave_acquisition_num STRING,
-  maternity_leave_acquisition_num STRING,
-)
-  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
+LOAD DATA OVERWRITE ${self()}
+  (
+    corporate_number STRING,
+    name__corporate_number STRING,
+    location__corporate_number STRING,
+    name STRING,
+    location STRING,
+    average_continuous_service_years_type STRING,
+    average_continuous_service_years_male STRING,
+    average_continuous_service_years_female STRING,
+    average_continuous_service_years STRING,
+    average_age STRING,
+    month_average_predetermined_overtime_hours STRING,
+    female_workers_proportion_type STRING,
+    female_workers_proportion STRING,
+    female_share_of_manager STRING,
+    gender_total_of_manager STRING,
+    female_share_of_officers STRING,
+    gender_total_of_officers STRING,
+    number_of_paternity_leave STRING,
+    number_of_maternity_leave STRING,
+    paternity_leave_acquisition_num STRING,
+    maternity_leave_acquisition_num STRING,
+  )
   OPTIONS (
+    description = "gs://${dataform.projectConfig.vars.bucketEventarc}/gbizinfo/workplace.csv"
+  )
+  FROM FILES(
     allow_quoted_newlines=TRUE,
     format = 'CSV',
     uris = ['gs://${dataform.projectConfig.vars.bucketEventarc}/gbizinfo/workplace.csv'],
-    skip_leading_rows = 1)
+    skip_leading_rows = 1
+  )
+  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
