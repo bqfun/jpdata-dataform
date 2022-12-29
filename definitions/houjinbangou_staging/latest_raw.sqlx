@@ -5,39 +5,44 @@ config {
   hasOutput: true,
 }
 
-CREATE OR REPLACE EXTERNAL TABLE ${self()} (
-  sequence_number STRING,
-  corporate_number STRING,
-  process STRING,
-  correct STRING,
-  update_date STRING,
-  change_date STRING,
-  name STRING,
-  name_image_id STRING,
-  kind STRING,
-  prefecture_name STRING,
-  city_name STRING,
-  street_number STRING,
-  address_image_id STRING,
-  prefecture_code STRING,
-  city_code STRING,
-  post_code STRING,
-  address_outside STRING,
-  address_outside_image_id STRING,
-  close_date STRING,
-  close_cause STRING,
-  successor_corporate_number STRING,
-  change_cause STRING,
-  assignment_date STRING,
-  latest STRING,
-  en_name STRING,
-  en_prefecture_name STRING,
-  en_city_name STRING,
-  en_address_outside STRING,
-  furigana STRING,
-  hihyoji STRING,
-)
-  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
+LOAD DATA OVERWRITE ${self()}
+  (
+    sequence_number STRING,
+    corporate_number STRING,
+    process STRING,
+    correct STRING,
+    update_date STRING,
+    change_date STRING,
+    name STRING,
+    name_image_id STRING,
+    kind STRING,
+    prefecture_name STRING,
+    city_name STRING,
+    street_number STRING,
+    address_image_id STRING,
+    prefecture_code STRING,
+    city_code STRING,
+    post_code STRING,
+    address_outside STRING,
+    address_outside_image_id STRING,
+    close_date STRING,
+    close_cause STRING,
+    successor_corporate_number STRING,
+    change_cause STRING,
+    assignment_date STRING,
+    latest STRING,
+    en_name STRING,
+    en_prefecture_name STRING,
+    en_city_name STRING,
+    en_address_outside STRING,
+    furigana STRING,
+    hihyoji STRING,
+  )
   OPTIONS (
+    description = "gs://${dataform.projectConfig.vars.bucketEventarc}/houjinbangou.csv"
+  )
+  FROM FILES(
     format = 'CSV',
-    uris = ['gs://${dataform.projectConfig.vars.bucketEventarc}/houjinbangou.csv'])
+    uris = ['gs://${dataform.projectConfig.vars.bucketEventarc}/houjinbangou.csv']
+  )
+  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
