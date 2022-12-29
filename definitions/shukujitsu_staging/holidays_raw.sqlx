@@ -11,7 +11,6 @@ CREATE OR REPLACE EXTERNAL TABLE ${self()} (
 )
   WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
   OPTIONS (
-    allow_quoted_newlines=TRUE,
     format = 'CSV',
     uris = ['gs://${dataform.projectConfig.vars.bucketEventarc}/syukujitsu.csv'],
     skip_leading_rows = 1)
