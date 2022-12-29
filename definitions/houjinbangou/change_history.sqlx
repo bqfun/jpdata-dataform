@@ -77,7 +77,7 @@ SELECT
     WHEN correct IS NULL THEN NULL
     ELSE ERROR(FORMAT("correct: %T", correct))
   END AS correct,
-  PARSE_DATE("%Y-%m-%d", update_date) AS update_date,
+  update_date,
   PARSE_DATE("%Y-%m-%d", change_date) AS change_date,
   name,
   CASE

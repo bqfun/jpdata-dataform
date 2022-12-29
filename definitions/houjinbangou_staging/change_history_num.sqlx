@@ -1,8 +1,9 @@
 config {
   type: "operations",
   schema: "houjinbangou_staging",
-  tags: ["once"],
+  tags: ["houjinbangou/num/*"],
   hasOutput: true,
+  disabled: true,
 }
 
 LOAD DATA OVERWRITE ${self()} (
