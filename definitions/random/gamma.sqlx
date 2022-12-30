@@ -11,5 +11,5 @@ CREATE OR REPLACE FUNCTION ${self()}(shape FLOAT64, rate FLOAT64)
       shape,
       RAND(),
       ${ref("random_staging", "box_muller_transform")}(RAND(), RAND())
-    ) * rate
+    ) / rate
   )
