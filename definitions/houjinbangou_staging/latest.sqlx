@@ -45,4 +45,3 @@ LOAD DATA OVERWRITE ${self()}
     format = 'CSV',
     uris = ['gs://${dataform.projectConfig.vars.bucketEventarc}/houjinbangou.csv']
   )
-  WITH CONNECTION `${dataform.projectConfig.vars.connectionID}`
