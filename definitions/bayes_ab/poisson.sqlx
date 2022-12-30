@@ -1,6 +1,6 @@
 config {
   type: "operations",
-  schema: "random",
+  schema: "bayes_ab",
   tags: ["once"],
   hasOutput: true,
 }
