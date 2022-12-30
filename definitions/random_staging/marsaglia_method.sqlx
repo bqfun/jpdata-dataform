@@ -16,4 +16,4 @@ CREATE OR REPLACE FUNCTION ${self()}(alpha FLOAT64, U FLOAT64, x FLOAT64)
       ),
       ERROR("Argument alpha must be greater than or equal to one")
   )
-  OPTIONS (desciption = "Marsaglia, G., & Tsang, W. W. (2000). A simple method for generating gamma variables. ACM Transactions on Mathematical Software (TOMS), 26(3), 363-372.")
+  OPTIONS (description = "Marsaglia, G., & Tsang, W. W. (2000). A simple method for generating gamma variables. ACM Transactions on Mathematical Software (TOMS), 26(3), 363-372.")
