@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION ${self()}(a FLOAT64, b FLOAT64)
   AS (
     IF(
       a > 0 AND b > 0,
-      ${ref("random_staging", "beta_initialize_2")}(
+      ${ref("random_staging", "cheng_algorithm_ba_initialize_2")}(
         a => a,
         b => b,
         alpha => a + b

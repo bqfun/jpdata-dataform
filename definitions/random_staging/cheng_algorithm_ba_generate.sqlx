@@ -7,7 +7,7 @@ config {
 
 CREATE OR REPLACE FUNCTION ${self()}(initialized STRUCT<a FLOAT64, b FLOAT64, alpha FLOAT64, beta FLOAT64, gamma FLOAT64>, U_1 FLOAT64, U_2 FLOAT64)
   AS (
-    ${ref("random_staging", "beta_generate_2")}(
+    ${ref("random_staging", "cheng_algorithm_ba_generate_2")}(
       a => initialized.a,
       b => initialized.b,
       alpha => initialized.alpha,
