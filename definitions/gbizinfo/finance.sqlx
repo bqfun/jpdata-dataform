@@ -44,24 +44,114 @@ config {
 }
 
 SELECT
-  corporate_number,
-  name,
-  location,
-  accounting_standards,
-  fiscal_year_cover_page,
-  period,
-  net_sales_summary_of_business_results,
-  operating_revenue1_summary_of_business_results,
-  operating_revenue2_summary_of_business_results,
-  gross_operating_revenue_summary_of_business_results,
-  ordinary_income_summary_of_business_results,
-  net_premiums_written_summary_of_business_results_ins,
-  ordinary_income_loss_summary_of_business_results,
-  net_income_loss_summary_of_business_results,
-  capital_stock_summary_of_business_results,
-  net_assets_summary_of_business_results,
-  total_assets_summary_of_business_results,
-  number_of_employees,
-  major_shareholders,
-FROM
-  ${ref("gbizinfo_staging", "finance_stg")}
+  IF(corporate_number <> "", corporate_number, ERROR('(corporate_number <> "") IS NOT TRUE')) AS corporate_number,
+  IF(name <> "",  name, ERROR('(name <> "") IS NOT TRUE')) AS name,
+  IF(location <> "",  location, ERROR('(location <> "") IS NOT TRUE')) AS location,
+  NULLIF(accounting_standards, "") AS accounting_standards,
+  CASE
+    WHEN REGEXP_CONTAINS(fiscal_year_cover_page, r"^自.+至.+$") THEN STRUCT(
+      ${ref("gbizinfo_staging", "to_date")}(REGEXP_EXTRACT(fiscal_year_cover_page, r"^自(.+)至.+$")) AS start_date,
+      ${ref("gbizinfo_staging", "to_date")}(REGEXP_EXTRACT(fiscal_year_cover_page, r"^自.+至(.+)$")) AS end_date
+    )
+    WHEN REGEXP_CONTAINS(fiscal_year_cover_page, r"^.+から.+まで$") THEN STRUCT(
+      ${ref("gbizinfo_staging", "to_date")}(REGEXP_EXTRACT(fiscal_year_cover_page, r"^(.+)から.+まで$")) AS start_date,
+      ${ref("gbizinfo_staging", "to_date")}(REGEXP_EXTRACT(fiscal_year_cover_page, r"^.+から(.+)まで$")) AS end_date
+    )
+    ELSE ERROR("Unsupported fiscal_year_cover_page: " || IFNULL(fiscal_year_cover_page, "null"))
+  END AS fiscal_year_cover_page,
+  CASE period
+    WHEN "0" THEN 0
+    WHEN "1" THEN 1
+    WHEN "2" THEN 2
+    WHEN "3" THEN 3
+    WHEN "4" THEN 4
+    ELSE ERROR("Unsupported period: " || period)
+  END AS period,
+  CASE
+    WHEN net_sales_summary_of_business_results = "" THEN NULL
+    WHEN net_sales_summary_of_business_results_unit_ref = "JPY" THEN CAST(net_sales_summary_of_business_results AS INT64)
+    ELSE ERROR("net_sales_summary_of_business_results")
+  END AS net_sales_summary_of_business_results,
+  CASE
+    WHEN operating_revenue1_summary_of_business_results = "" THEN NULL
+    WHEN operating_revenue1_summary_of_business_results_unit_ref = "JPY" THEN CAST(operating_revenue1_summary_of_business_results AS INT64)
+    ELSE ERROR("operating_revenue1_summary_of_business_results")
+  END AS operating_revenue1_summary_of_business_results,
+  CASE
+    WHEN operating_revenue2_summary_of_business_results = "" THEN NULL
+    WHEN operating_revenue2_summary_of_business_results_unit_ref = "JPY" THEN CAST(operating_revenue2_summary_of_business_results AS INT64)
+    ELSE ERROR("operating_revenue2_summary_of_business_results")
+  END AS operating_revenue2_summary_of_business_results,
+  CASE
+    WHEN gross_operating_revenue_summary_of_business_results = "" THEN NULL
+    WHEN gross_operating_revenue_summary_of_business_results_unit_ref = "JPY" THEN CAST(gross_operating_revenue_summary_of_business_results AS INT64)
+    ELSE ERROR("gross_operating_revenue_summary_of_business_results")
+  END AS gross_operating_revenue_summary_of_business_results,
+  CASE
+    WHEN ordinary_income_summary_of_business_results = "" THEN NULL
+    WHEN ordinary_income_summary_of_business_results_unit_ref = "JPY" THEN CAST(ordinary_income_summary_of_business_results AS INT64)
+    ELSE ERROR("ordinary_income_summary_of_business_results")
+  END AS ordinary_income_summary_of_business_results,
+  CASE
+    WHEN net_premiums_written_summary_of_business_results_ins = "" THEN NULL
+    WHEN net_premiums_written_summary_of_business_results_ins_unit_ref = "JPY" THEN CAST(net_premiums_written_summary_of_business_results_ins AS INT64)
+    ELSE ERROR("net_premiums_written_summary_of_business_results_ins")
+  END AS net_premiums_written_summary_of_business_results_ins,
+  CASE
+    WHEN ordinary_income_loss_summary_of_business_results = "" THEN NULL
+    WHEN ordinary_income_loss_summary_of_business_results_unit_ref = "JPY" THEN CAST(ordinary_income_loss_summary_of_business_results AS INT64)
+    ELSE ERROR("ordinary_income_loss_summary_of_business_results")
+  END AS ordinary_income_loss_summary_of_business_results,
+  CASE
+    WHEN net_income_loss_summary_of_business_results = "" THEN NULL
+    WHEN net_income_loss_summary_of_business_results_unit_ref = "JPY" THEN CAST(net_income_loss_summary_of_business_results AS INT64)
+    ELSE ERROR("net_income_loss_summary_of_business_results")
+  END AS net_income_loss_summary_of_business_results,
+  CASE
+    WHEN capital_stock_summary_of_business_results = "" THEN NULL
+    WHEN capital_stock_summary_of_business_results_unit_ref = "JPY" THEN CAST(capital_stock_summary_of_business_results AS INT64)
+    ELSE ERROR("capital_stock_summary_of_business_results")
+  END AS capital_stock_summary_of_business_results,
+  CASE
+    WHEN net_assets_summary_of_business_results = "" THEN NULL
+    WHEN net_assets_summary_of_business_results_unit_ref = "JPY" THEN CAST(net_assets_summary_of_business_results AS INT64)
+    ELSE ERROR("net_assets_summary_of_business_results")
+  END AS net_assets_summary_of_business_results,
+  CASE
+    WHEN total_assets_summary_of_business_results = "" THEN NULL
+    WHEN total_assets_summary_of_business_results_unit_ref = "JPY" THEN CAST(total_assets_summary_of_business_results AS INT64)
+    ELSE ERROR("total_assets_summary_of_business_results")
+  END AS total_assets_summary_of_business_results,
+  CASE
+    WHEN number_of_employees = "" THEN NULL
+    WHEN number_of_employees_unit_ref = "pure" THEN CAST(number_of_employees AS INT64)
+    ELSE ERROR("number_of_employees")
+  END AS number_of_employees,
+  ARRAY(
+    SELECT AS STRUCT
+      name_major_shareholders,
+      CAST(NULLIF(shareholding_ratio, "") AS NUMERIC) AS shareholding_ratio,
+    FROM
+      UNNEST(ARRAY<STRUCT<id INT64, name_major_shareholders STRING, shareholding_ratio STRING>>[
+        (1, name_major_shareholders1, shareholding_ratio1),
+        (2, name_major_shareholders2, shareholding_ratio2),
+        (3, name_major_shareholders3, shareholding_ratio3),
+        (4, name_major_shareholders4, shareholding_ratio4),
+        (5, name_major_shareholders5, shareholding_ratio5)
+      ])
+    WHERE
+      name_major_shareholders <> "" OR shareholding_ratio <> ""
+    ORDER BY
+      id
+  ) AS major_shareholders,
+FROM (
+  SELECT
+    *REPLACE(
+      REGEXP_EXTRACT(
+        REGEXP_REPLACE(NORMALIZE(fiscal_year_cover_page, NFKC), r"\p{Space}", ""),
+        r"^(?:\d{4}年\d{1,2}月期\(第\d+期\)|\d{4}年\d{1,2}月期|\d{4}年度?|第\d+期\(\d{4}年\d{1,2}月期\)|第\d+期|\(第\d+期\))\((.+)\)$"
+      ) AS fiscal_year_cover_page
+    )
+  FROM
+    ${ref("gbizinfo_staging", "finance")}
+)

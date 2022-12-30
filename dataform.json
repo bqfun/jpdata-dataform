@@ -5,7 +5,6 @@
   "defaultDatabase": "jpdata",
   "defaultLocation": "asia-northeast1",
   "vars": {
-    "connectionID": "jpdata.asia-northeast1.main",
     "bucketEventarc": "jpdata-source-eventarc",
     "bucket": "jpdata-source"
   }

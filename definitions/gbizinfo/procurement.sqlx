@@ -21,13 +21,13 @@ config {
 }
 
 SELECT
-  corporate_number,
-  name,
-  location,
-  date_of_order,
-  title,
-  amount,
-  government_departments,
-  joint_signatures,
+  IF(corporate_number <> "", corporate_number, ERROR('(corporate_number <> "") IS NOT TRUE')) AS corporate_number,
+  IF(name <> "", name, ERROR('(name <> "") IS NOT TRUE')) AS name,
+  NULLIF(location, "") AS location,
+  PARSE_DATE("%Y-%m-%dT00:00:00+09:00", NULLIF(date_of_order, "")) AS date_of_order,
+  NULLIF(title, "") AS title,
+  CAST(NULLIF(amount, "") AS INT64) AS amount,
+  IF(government_departments <> "", government_departments, ERROR('(government_departments <> "") IS NOT TRUE')) AS government_departments,
+  SPLIT(NULLIF(joint_signatures, ""), "、") AS joint_signatures,
 FROM
-  ${ref("gbizinfo_staging", "procurement_stg")}
+  ${ref("gbizinfo_staging", "procurement")}

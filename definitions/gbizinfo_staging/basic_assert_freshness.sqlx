@@ -5,8 +5,8 @@ config {
 }
 
 SELECT
-  CURRENT_DATE("Asia/Tokyo") - MAX(update_date) AS delay,
+  CURRENT_DATE("Asia/Tokyo") - PARSE_DATE("%Y-%m-%dT00:00:00+09:00", MAX(update_date)) AS delay,
 FROM
-  ${ref("gbizinfo_staging", "basic_stg")}
+  ${ref("gbizinfo_staging", "basic")}
 HAVING
   INTERVAL 3 DAY < delay

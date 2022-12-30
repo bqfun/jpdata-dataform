@@ -5,8 +5,8 @@ config {
 }
 
 SELECT
-  CURRENT_DATE("Asia/Tokyo") - MAX(date_of_approval) AS delay,
+  CURRENT_DATE("Asia/Tokyo") - PARSE_DATE("%Y-%m-%d", MAX(date_of_approval)) AS delay,
 FROM
-  ${ref("gbizinfo_staging", "certification_stg")}
+  ${ref("gbizinfo_staging", "certification")}
 HAVING
   INTERVAL 39 DAY < delay

@@ -23,15 +23,21 @@ config {
 }
 
 SELECT
-  corporate_number,
-  name,
-  location,
-  date_of_approval,
-  title,
-  target,
-  category,
-  enterprise_scale,
-  expiration_date,
-  government_departments,
+  IF(corporate_number <> "", corporate_number, ERROR('(corporate_number <> "") IS NOT TRUE')) AS corporate_number,
+  IF(name <> "", name, ERROR('(name <> "") IS NOT TRUE')) AS name,
+  NULLIF(location, "") AS location,
+  PARSE_DATE("%Y-%m-%d", NULLIF(date_of_approval, "")) AS date_of_approval,
+  IF(title <> "", title, ERROR('(title <> "") IS NOT TRUE')) AS title,
+  NULLIF(target, "") AS target,
+  NULLIF(category, "") AS category,
+  CASE enterprise_scale
+    WHEN "" THEN NULL
+    WHEN "1" THEN "大企業"
+    WHEN "2" THEN "中企業"
+    WHEN "3" THEN "その他"
+    WHEN "4" THEN "未定義"
+  END AS enterprise_scale,
+  PARSE_DATE("%Y-%m-%d", NULLIF(expiration_date, "")) AS expiration_date,
+  IF(government_departments <> "", government_departments, ERROR('(government_departments <> "") IS NOT TRUE')) AS government_departments,
 FROM
-  ${ref("gbizinfo_staging", "certification_stg")}
+  ${ref("gbizinfo_staging", "certification")}

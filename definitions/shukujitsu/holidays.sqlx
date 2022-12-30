@@ -15,7 +15,7 @@ config {
 }
 
 SELECT
-  date,
+  PARSE_DATE("%Y/%m/%d", date) AS date,
   name,
 FROM
-  ${ref("shukujitsu_staging", "holidays_stg")}
+  ${ref("shukujitsu_staging", "holidays")}
