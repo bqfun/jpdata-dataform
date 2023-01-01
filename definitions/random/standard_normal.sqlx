@@ -1,9 +1,0 @@
-config {
-  type: "operations",
-  schema: "random",
-  tags: ["once"],
-  hasOutput: true,
-}
-
-CREATE OR REPLACE FUNCTION ${self()}()
-  AS (${ref("random_staging", "box_muller_transform")}(RAND(), RAND()))
