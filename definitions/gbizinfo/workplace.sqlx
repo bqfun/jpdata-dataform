@@ -34,7 +34,7 @@ config {
 SELECT
   IF(corporate_number <> "", corporate_number, ERROR('(corporate_number <> "") IS NOT TRUE')) AS corporate_number,
   IF(name <> "",  name, ERROR('(name <> "") IS NOT TRUE')) AS name,
-  IF(location <> "", location, ERROR('(location <> "") IS NOT TRUE')) AS location,
+  NULLIF(location, "") AS location,
   NULLIF(average_continuous_service_years_type, "") AS average_continuous_service_years_type,
   CAST(NULLIF(average_continuous_service_years_male, "") AS NUMERIC) AS average_continuous_service_years_male,
   CAST(NULLIF(average_continuous_service_years_female, "") AS NUMERIC) AS average_continuous_service_years_female,
