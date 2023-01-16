@@ -9,4 +9,4 @@ SELECT
 FROM
   ${ref("gbizinfo_staging", "basic")}
 HAVING
-  INTERVAL 3 DAY < delay
+  INTERVAL 4 DAY < delay
