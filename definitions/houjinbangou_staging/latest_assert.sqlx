@@ -1,7 +1,6 @@
 config {
   type: "assertion",
-  schema: "houjinbangou_staging",
-  tags: ["monthly"]
+  schema: "houjinbangou_staging"
 }
 
 SELECT
