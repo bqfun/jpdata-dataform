@@ -1,7 +1,6 @@
 config {
   type: "assertion",
-  schema: "gbizinfo_staging",
-  tags: ["daily"]
+  schema: "gbizinfo_staging"
 }
 
 SELECT
