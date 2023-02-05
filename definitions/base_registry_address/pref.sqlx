@@ -1,0 +1,30 @@
+config {
+  type: "table",
+  schema: "base_registry_address",
+  description: "日本 都道府県マスター データセット",
+  bigquery: {
+    labels: {
+      freshness: "monthly",
+    }
+  },
+  columns: {
+    local_goverment_code: "全国地方公共団体コード",
+    prefecture: "都道府県名",
+    prefecture_kana: "都道府県名_カナ",
+    prefecture_en: "都道府県名_英字",
+    effective_from: "効力発生日",
+    effective_to: "廃止日",
+    remarks: "備考",
+  },
+}
+
+SELECT
+  local_goverment_code,
+  prefecture,
+  prefecture_kana,
+  prefecture_en,
+  PARSE_DATE("%Y-%m-%d", effective_from) AS effective_from,
+  PARSE_DATE("%Y-%m-%d", effective_to) AS effective_to,
+  remarks,
+FROM
+  ${ref("base_registry_address_staging", "pref")}
