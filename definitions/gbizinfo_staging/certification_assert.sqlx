@@ -8,4 +8,4 @@ SELECT
 FROM
   ${ref("gbizinfo_staging", "certification")}
 HAVING
-  num_rows < 143803 -- 2022-12-30時点の行数
+  num_rows < 122995 -- 2023-04-03時点の行数
