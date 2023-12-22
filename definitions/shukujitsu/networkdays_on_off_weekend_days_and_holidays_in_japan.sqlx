@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION ${self()}(start_date DATE, end_date DATE)
   AS (
     (
       SELECT
-        COUNTIF(${ref("holidays_in_japan", "holiday_name")}(d) IS NULL AND EXTRACT(DAYOFWEEK FROM d) NOT IN (1, 7))
+        COUNTIF(${ref("shukujitsu", "holiday_name")}(d) IS NULL AND EXTRACT(DAYOFWEEK FROM d) NOT IN (1, 7))
       FROM
         UNNEST(GENERATE_DATE_ARRAY(start_date, end_date)) AS d
     )
